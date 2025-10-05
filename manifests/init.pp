@@ -27,7 +27,7 @@ class kerberos(
 ) inherits kerberos::params {
   include ::stdlib
 
-  $_kadmin_hostname = pick($kadmin_hostname, $facts['fqdn'])
+  $_kadmin_hostname = pick($kadmin_hostname, $facts['networking']['fqdn'])
   $_kdc_hostnames = pick($kdc_hostnames, [$_kadmin_hostname])
   $kprop_hostnames = difference($_kdc_hostnames, [$_kadmin_hostname])
 
@@ -78,13 +78,13 @@ class kerberos(
   }, $kdc_properties)
 
   if $perform {
-    if $facts['fqdn'] == $_kadmin_hostname {
+    if $facts['networking']['fqdn'] == $_kadmin_hostname {
       include ::kerberos::kadmin
     }
-    if member($_kdc_hostnames, $facts['fqdn']) {
+    if member($_kdc_hostnames, $facts['networking']['fqdn']) {
       include ::kerberos::kdc
     }
-    if member($kprop_hostnames, $facts['fqdn']) {
+    if member($kprop_hostnames, $facts['networking']['fqdn']) {
       include ::kerberos::kprop
     }
     include ::kerberos::client
