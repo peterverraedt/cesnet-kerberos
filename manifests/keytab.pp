@@ -25,7 +25,7 @@ define kerberos::keytab(
   $path = '/sbin:/usr/sbin:/bin:/usr/bin'
 
   if $local == '::undef' {
-    $is_local = $::facts['fqdn'] == $::kerberos::_kadmin_hostname
+    $is_local = $facts['fqdn'] == $::kerberos::_kadmin_hostname
   } else {
     $is_local = $local
   }

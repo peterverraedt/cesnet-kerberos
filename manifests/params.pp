@@ -3,7 +3,7 @@
 # Parameters for Kerberos.
 #
 class kerberos::params {
-  case $::facts['os']['family'] {
+  case $facts['os']['family'] {
     'Debian': {
       $kadmin_service = 'krb5-admin-server'
       $kdc_service = 'krb5-kdc'
@@ -19,7 +19,7 @@ class kerberos::params {
     }
   }
 
-  case $::facts['os']['family'] {
+  case $facts['os']['family'] {
     'Debian': {
       $kadmin_packages = ['krb5-admin-server']
       $kdc_packages    = ['krb5-kdc']
@@ -37,12 +37,12 @@ class kerberos::params {
     }
   }
 
-  $kdc_conf_dir = $::facts['os']['family'] ? {
+  $kdc_conf_dir = $facts['os']['family'] ? {
     'debian' => '/etc/krb5kdc',
     'redhat' => '/var/kerberos/krb5kdc',
   }
 
-  $kdc_data_dir = $::facts['os']['family'] ? {
+  $kdc_data_dir = $facts['os']['family'] ? {
     'debian' => '/var/lib/krb5kdc',
     'redhat' => '/var/kerberos/krb5kdc',
   }
